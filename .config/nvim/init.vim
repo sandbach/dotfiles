@@ -548,5 +548,3 @@ let g:tidal_target = "terminal"
 let g:tidal_no_mappings = 1
 
 nnoremap <C-e> <Plug>TidalParagraphSend
-
-" This is a test.

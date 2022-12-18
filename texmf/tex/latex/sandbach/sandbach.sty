@@ -1,0 +1,271 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sandbach}[2021/05/16]
+
+\RequirePackage[bidi=default]{babel} % multilingual typesetting
+\RequirePackage{fontspec} % modern font selection
+\RequirePackage{graphicx} % images
+\RequirePackage[autostyle=true]{csquotes} % automatic quotes, works with babel
+\RequirePackage{setspace} % line spacing
+\RequirePackage{amsmath, nccmath} % maths
+\RequirePackage{mathtools} % more maths, particularly AVMs
+\RequirePackage{geometry} % page size
+% \RequirePackage{pst-node} % nodes between words for structure-sharing lines
+% \RequirePackage{qtree} % syntax trees
+\RequirePackage{fancyhdr} % header and footer
+% \RequirePackage[super]{nth} % smart superscripts for 20th etc.
+\RequirePackage{xcolor} % convenient colours
+\RequirePackage{longtable} % tables which span multiple pages
+\RequirePackage{booktabs} % nice professional tables with horizontal rules
+\RequirePackage[format=plain]{caption} % better captions
+% \RequirePackage{snotez} % sidenotes
+\RequirePackage{xstring} % string manipulation
+\RequirePackage{mfirstuc} % string manipulation
+\RequirePackage{titlesec} % custom sections
+\RequirePackage{titletoc} % custom table of contents
+\RequirePackage[hidelinks]{hyperref} % hyperlinks
+\RequirePackage{covington} % linguistics numbered examples, multi-line glosses
+
+\newcommand{\reftitle}{References}
+\newcommand{\sidenote}[1]{\marginpar{\leavevmode\footnotesize\raggedright\setstretch{1}#1}}
+\newcommand{\sidecite}[2][]{ \parencite[#1]{#2}}
+\newcommand{\sidecites}[1]{ \parencites#1}
+\newcommand{\parenth}[1]{ (#1)}
+\newcommand{\Author}{Asher Sandbach}
+\newcommand{\Spacing}{\onehalfspacing}
+
+% \ingl provides an in-line gloss in the form:
+% _native word_ `meaning' OR
+% _native word_ /transcription/ `meaning'
+\newcommand{\ingl}[3][]{%
+	\ifthenelse{\equal{#1}{}}%
+	{\emph{#2} \enquote{#3}}%
+	{\emph{#2} /{\fontspec[Scale=MatchLowercase]{Linux Libertine O}#1}/ \enquote{#3}}%
+}
+
+\DeclareOption{de}{
+	\babelprovide[import]{british}
+	\babelprovide[import, main]{ngerman}
+	\renewcommand{\reftitle}{Literatur}
+	\renewcommand{\ingl}[3][]{% use German quotes for in-line gloss
+	\ifthenelse{\equal{#1}{}}%
+	{\emph{#2} \enquote*{#3}}%
+	{\emph{#2} /#1/ \enquote*{#3}}%
+	}
+}
+
+\DeclareOption{en}{
+	\babelprovide[import]{ngerman}
+	\babelprovide[import, main]{british}
+	\renewcommand{\reftitle}{References}
+	\renewcommand*\glosslinetrans[1]{\enquote{#1}}% use inverted commas
+% 	in gloss line translation for examples
+}
+
+\DeclareOption{times}{
+	\setmainfont{Times New Roman}
+}
+
+% \ExecuteOptions{times} % I don't generally use Times, so it seems odd to have it as the default option
+
+\DeclareOption{cardo}{
+	\setmainfont[Numbers=OldStyle]{Cardo}
+	\NewCommandCopy{\oldamp}{\&}
+	\renewcommand{\&}{\textit{\oldamp}}% fancy ampersands where possible
+}
+
+\DeclareOption{ebg}{
+	\setmainfont[Numbers=OldStyle]{EB Garamond}
+	\NewCommandCopy{\oldamp}{\&}
+	\renewcommand{\&}{\textit{\oldamp}}
+}
+
+\DeclareOption{cmu}{
+	\setmainfont[Numbers=OldStyle]{CMU Serif}
+	\NewCommandCopy{\oldamp}{\&}
+	\renewcommand{\&}{\textit{\oldamp}}
+}
+
+\DeclareOption{minion}{
+	\setmainfont[Numbers=OldStyle]{Minion Pro}
+	\NewCommandCopy{\oldamp}{\&}
+	\renewcommand{\&}{\textit{\oldamp}}
+}
+
+\DeclareOption{libertine}{
+	\setmainfont[Numbers=OldStyle]{Linux Libertine O}
+	\NewCommandCopy{\oldamp}{\&}
+	\renewcommand{\&}{{\addfontfeature{Alternate=0}\oldamp}}
+}
+
+\DeclareOption{arno}{
+	\setmainfont[Numbers=OldStyle]{Arno Pro}
+}
+
+\DeclareOption{arial}{
+	\setmainfont{Arial}
+}
+
+\DeclareOption{normal}{
+	\geometry{a4paper, margin=1.25in}
+}
+
+\ExecuteOptions{normal}
+
+% the notes option redefines \sidecite(s) to send parenthetical citations into the margin
+\DeclareOption{notes}{
+	\geometry{a4paper, top=1in, left=1.1in, bottom=1in, right=2.15in, marginparwidth=1.5in}
+	\renewcommand{\sidecite}[2][]{\sidenote{\textcite[#1]{#2}}}
+	\renewcommand{\sidecites}[1]{\sidenote{\textcites#1}}
+	\renewcommand{\footnote}[1]{\sidenote{#1}}
+% 	make sure the thing in parentheses ends up capitalized 
+% 	and with a full stop, regardless of how it looks to begin with
+	\renewcommand{\parenth}[1]{%
+	\IfEndWith{#1}{.}%
+	{\sidenote{\xmakefirstuc{#1}}}%
+	{\sidenote{\xmakefirstuc{#1}.}}%	
+	}
+}
+
+\DeclareOption{authoryear}{
+	\PassOptionsToPackage{style=authoryear-icomp}{biblatex}
+}
+
+\DeclareOption{apa}{
+	\PassOptionsToPackage{style=apa}{biblatex}
+}
+
+\DeclareOption{mla}{
+	\PassOptionsToPackage{style=mla}{biblatex}
+}
+
+\ExecuteOptions{authoryear}
+
+\DeclareOption{exam}{
+	\geometry{a4paper, margin=1in}
+	\renewcommand{\Author}{}
+	\renewcommand{\Spacing}{\doublespacing}
+	\setmainfont{Arial}
+}
+
+\DeclareOption{submission}{
+	\renewcommand{\Author}{}
+	\renewcommand{\Spacing}{\doublespacing}
+	\geometry{a4paper, left=1.5in, right=1.25in}
+
+}
+
+\ProcessOptions\relax
+
+\RequirePackage[backend=biber, sortcites]{biblatex}% bibliography (down here because it has to come after \PassOptionsToPackage)
+
+\DefineBibliographyExtras{british}{\def\finalandcomma{\addcomma}} % Enable Oxford Comma
+\babelprovide[import]{arabic}
+\babelprovide[import]{hebrew}
+\babelprovide[import]{hebrew}
+\babelprovide[import]{chinese}
+% \babelfont[arabic]{rm}{Scheherazade New}
+\babelfont[arabic]{rm}{Noto Naskh Arabic}
+\babelfont[arabic]{sf}{Noto Sans Arabic}
+\babelfont[hebrew]{rm}{SBL Hebrew}
+\babelfont[chinese]{rm}{Noto Serif CJK TC}
+\babelfont[chinese]{sf}{Noto Sans CJK TC}
+% \babelfont[greek]{rm}{GFS Porson}
+\setmonofont{Roboto Mono}[Scale=MatchLowercase]
+% \setsansfont{Noto Sans}[Scale=MatchLowercase]
+\setsansfont{Linux Biolinum O}%[Scale=MatchLowercase]
+% \qtreecenterfalse
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\Author}
+\Spacing
+\frenchspacing
+\setlength{\textfloatsep}{\intextsep} % gap between floats and body text is always the same
+
+% \titleformat{\section}{\normalfont\scshape}{\thesection}{1em}{}
+% \titlecontents{section}
+% [3.8em] % ie, 1.5em (chapter) + 2.3em
+% {}
+% {\contentslabel{2.3em}}
+% {\hspace*{-2.3em}}
+% {\titlerule*[1pc]{ }\contentspage}
+
+\AtBeginEnvironment{example}{\singlespacing}
+\AtEndEnvironment{example}{\Spacing}
+\AtBeginEnvironment{examples}{\singlespacing}
+\AtEndEnvironment{examples}{\Spacing}
+\AtBeginEnvironment{subexamples}{\singlespacing}
+\AtEndEnvironment{subexamples}{\Spacing}
+
+% \NewCommandCopy{\oldtitle}{\maketitle}
+% \renewcommand{\maketitle}{%
+% \newgeometry{margin=1.25in}%
+% \oldtitle%
+% \thispagestyle{empty}%
+% }
+% \NewCommandCopy{\oldtoc}{\tableofcontents}
+% \renewcommand{\tableofcontents}{%
+% \oldtoc%
+% \restoregeometry%
+% }
+
+\newcommand{\avmadjust}{\leavevmode\vadjust{\vspace{-\baselineskip}}\newline}
+\newcommand{\AR}[1]{\foreignlanguage{arabic}{#1}}
+\newcommand{\DE}[1]{\foreignlanguage{ngerman}{#1}}
+\newcommand{\EN}[1]{\foreignlanguage{english}{#1}}
+\newcommand{\GK}[1]{\foreignlanguage{greek}{#1}}
+\newcommand{\HE}[1]{\foreignlanguage{hebrew}{#1}}
+\newcommand{\CN}[1]{\foreignlanguage{chinese}{#1}}
+\newcommand{\OldE}[1]{{\fontspec{PfefferMediaeval.otf}
+\addfontfeature{StylisticSet=02} % SS02 changes w to wynn, etc.
+#1}}
+\newcommand{\OHG}[1]{{\fontspec{Pfeffer Mediæval}
+\addfontfeature{Style=Historic} % changes w to uu for OHG
+\addfontfeature{StylisticSet=01} % large, vertically centred capitals
+#1}}
+
+\newcommand{\Got}[1]{{\fontspec[Scale=MatchLowercase]{Silubr}%
+\addfontfeature{StylisticSet=05}%
+#1}}
+
+\newcommand{\Gotg}[1]{{\fontspec[Scale=MatchLowercase]{Silubr}%
+\addfontfeature{StylisticSet=05}%
+#1} (\emph{#1})}
+
+\newcommand{\references}{%
+% \filbreak%
+\noindent%
+\raggedright%
+\singlespacing%
+\printbibliography[title={\normalsize \textnormal{\textit{\reftitle}}\vspace{-0.5\baselineskip}}]
+}
+\newcommand{\essaytitle}[1]{\noindent\emph{#1}%
+\bigskip%
+\\%
+\noindent%
+\Spacing%
+}
+
+\newcommand{\EssayTitle}{}
+
+\newcommand{\settitle}[1]{%
+\renewcommand{\EssayTitle}{#1}}
+
+\newcommand{\printtitle}{%
+\singlespacing%
+\subsection*{\normalsize\textnormal{\emph{\EssayTitle}}}%
+\Spacing}
+
+\newcommand{\LFG}[1]{%
+	\ifthenelse{\equal{#1}{gf-hat}}%
+	{$\widehat{\textsc{gf}}$}%
+	{\textsc{\MakeLowercase{#1}}}%
+}
+
+\newcommand{\orth}[1]{{\fontspec[Scale=MatchUppercase]{Junicode}⟨}#1{\fontspec[Scale=MatchUppercase]{Junicode}⟩}}
+\newenvironment{danger}%
+{\color{red}}%
+{\color{black}}
+
+% \newcommand{\rec}[1]{*\emph{#1}}
+\newcommand{\aposcite}[2][]{\citeauthor{#2}'s \parencite*[#1]{#2}}

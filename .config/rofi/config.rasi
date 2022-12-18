@@ -1,0 +1,10 @@
+configuration {
+	modi: "window,drun,ssh,filebrowser";
+	kb-cancel: "Escape,Alt+F1";
+	kb-row-up: "Control+k";
+	kb-row-down: "Control+j";
+	kb-remove-to-eol: "";
+	kb-accept-entry: "Control+m,Return,KP_Enter";
+	font: "Fira Code 11";
+}
+@theme "solarized"

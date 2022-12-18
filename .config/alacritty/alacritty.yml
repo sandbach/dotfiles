@@ -1,0 +1,90 @@
+# Font configuration
+
+font:
+    normal:
+        family: Cascadia Code # (current favourite)
+#         family: Iosevka Term
+#         family: Fira Mono
+#         family: FuraCode Nerd Font
+#         family: Consolas
+#         family: Roboto Mono
+#         family: DejaVu Sans Mono
+#         family: Noto Sans Mono
+#         family: JetBrains Mono
+#         family: Hack
+
+        style: Medium
+
+    size: 14.0
+#     size: 15.0
+#     size: 16.0
+
+# Window dimensions
+
+window:
+    dimensions:
+        columns: 80
+        lines: 28
+
+    padding:
+        x: 2
+        y: 2
+
+# Colours 
+
+colors:
+    primary:
+#         foreground: '#dddddd'
+#         background: '#333333' # gnome terminal default
+#         background: '#1E1E1E' # vs code default
+        background: '#1C1C1C' # PaperColor
+
+    normal:
+#       (based on https://materialui.co/metrocolors)
+        black:  '#1d1f21'
+#         red: '#E51400'
+#         green: '#60A917'
+#         yellow: '#E3C800'
+#         blue: '#0085ff'
+#         magenta: '#D80073'
+#         cyan: '#1BA1E2'
+#         white: '#c5c8c6'
+      
+#       (https://chrisyeh96.github.io/2020/03/28/terminal-colors.html)
+        red: '#cc0000'
+        green: '#4e9a06'
+        yellow: '#c4a000'
+        blue: '#729fcf'
+        magenta: '#75507b'
+        cyan: '#06989a'
+        white: '#d3d7cf'
+
+# colors:
+#   bright:
+#     black: '#424242'
+#     blue: '#54a4f3'
+#     cyan: '#26bbd1'
+#     green: '#7aba3a'
+#     magenta: '#aa4dbc'
+#     red: '#e83b3f'
+#     white: '#d9d9d9'
+#     yellow: '#ffea2e'
+#   normal:
+#     black: '#212121'
+#     blue: '#134eb2'
+#     cyan: '#0e717c'
+#     green: '#457b24'
+#     magenta: '#560088'
+#     red: '#b7141f'
+#     white: '#efefef'
+#     yellow: '#f6981e'
+#   primary:
+#     background: '#232322'
+#     foreground: '#e5e5e5'
+#   selection:
+#     background: '#dfdfdf'
+#     text: '#3d3d3d'
+
+bell:
+    animation: EaseOutQuad
+    duration: 0

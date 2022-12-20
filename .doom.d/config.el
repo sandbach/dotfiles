@@ -181,5 +181,3 @@
    (python . t)))
 
 (setq org-babel-lisp-eval-fn #'slime-eval)
-
-;; This is another test.

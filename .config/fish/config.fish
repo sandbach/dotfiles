@@ -41,6 +41,7 @@ alias lisp "rlwrap sbcl"
 
 # funcsave bat zz
 
+# see: https://dev.to/nimai/yet-another-guide-on-backing-up-dotfiles-3be6
 function cfg 
 	command git --git-dir=$HOME/.config/cfg/.git --work-tree=$HOME $argv
 end

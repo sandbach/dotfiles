@@ -181,3 +181,16 @@
    (python . t)))
 
 (setq org-babel-lisp-eval-fn #'slime-eval)
+
+(defun c-settings ()
+  (display-fill-column-indicator-mode))
+
+(add-hook 'c-mode-hook 'c-settings)
+
+;; (setq-default tab-width 4)
+
+;; (c-add-style "my-style"
+;;              `("linux"
+;;                (c-basic-offset . ,tab-width)))
+
+;; (setq c-default-style "my-style")

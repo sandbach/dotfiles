@@ -45,3 +45,16 @@ alias lisp "rlwrap sbcl"
 function cfg 
 	command git --git-dir=$HOME/.config/cfg/.git --work-tree=$HOME $argv
 end
+
+# for emacsclient:
+set -gx ALTERNATE_EDITOR ""
+set -gx EDITOR "emacsclient -c"
+set -gx VISUAL "emacsclient -c -a emacs"
+
+function emacs
+    command emacsclient -a emacs $argv &
+end
+
+function emacsnew
+    command emacsclient -c -a emacs $argv &
+end

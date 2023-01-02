@@ -87,4 +87,4 @@ colors:
 
 bell:
     animation: EaseOutQuad
-    duration: 0
+    duration: 200

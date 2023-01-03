@@ -51,10 +51,14 @@ set -gx ALTERNATE_EDITOR ""
 set -gx EDITOR "emacsclient -c"
 set -gx VISUAL "emacsclient -c -a emacs"
 
-function emacs
-    command emacsclient -a emacs $argv &
-end
+# function emacs # add -c to open in new frame
+#     command emacsclient -a emacs $argv &
+# end
 
-function emacsnew
-    command emacsclient -c -a emacs $argv &
+function emacs
+    if pidof emacsclient
+        command emacsclient -a emacs $argv &
+    else
+        command emacsclient -c -a emacs $argv &
+    end
 end

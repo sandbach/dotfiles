@@ -24,8 +24,8 @@
 ;; (setq doom-font (font-spec :family "Fira Code" :size 18)
 (setq doom-font (font-spec :family "Cascadia Code" :size 18)
 ;; (setq doom-font (font-spec :family "Iosevka Term" :size 20 :style "Medium Extended")
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 18)
-      doom-unicode-font (font-spec :family "monospace" :size 18))
+      doom-variable-pitch-font (font-spec :family "Fira Sans")
+      doom-unicode-font (font-spec :family "monospace"))
 ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -80,9 +80,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Enable escape with "kj":
 (key-chord-mode 1)
 (key-seq-define-global "kj" 'evil-escape)
 
+;; My preferred mappings
 (map! :n "C-l" 'evil-window-right
       :n "C-h" 'evil-window-left
       :n "C-j" 'evil-window-down
@@ -103,19 +105,15 @@
  :desc "run-latexmk"
  "l" #'run-latexmk)
 
+;; Lisp
 (setq inferior-lisp-program "sbcl")
 
 (defun lisp-settings ()
   (rainbow-delimiters-mode)
-  (display-fill-column-indicator-mode)
-  ;; 'slime-lisp-mode-hook
-  )
+  (display-fill-column-indicator-mode))
 
-;; (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'lisp-mode-hook 'lisp-settings)
 (add-hook 'slime-mode-hook 'lisp-settings)
-
-;; (add-hook 'sly-editing-mode-hook 'lisp-settings)
 
 (global-smart-tab-mode)
 
@@ -153,6 +151,7 @@
          (disable-visual-line-movement)
          (setq visual-line-movement nil))))
 
+;; LaTeX
 (setq-default TeX-engine 'xetex)
 
 (defun run-latexmk ()
@@ -167,6 +166,7 @@
 
 (add-hook 'latex-mode-hook 'latex-settings)
 
+;; Org(-roam)
 (org-roam-db-autosync-mode)
 
 (setq org-roam-directory (file-truename "~/Dropbox/org-roam"))
@@ -182,8 +182,10 @@
 
 (setq org-babel-lisp-eval-fn #'slime-eval)
 
+;; C
 (defun c-settings ()
-  (display-fill-column-indicator-mode))
+  (display-fill-column-indicator-mode)
+  (format-all-mode))
 
 (add-hook 'c-mode-hook 'c-settings)
 

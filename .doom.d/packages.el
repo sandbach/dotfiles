@@ -57,4 +57,4 @@
 (package! zenburn-theme)
 (package! org-roam)
 (package! ob-async)
-;; (package! vterm)
+;; (package! fish-mode)

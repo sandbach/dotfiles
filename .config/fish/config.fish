@@ -31,7 +31,7 @@ fish_add_path ~/.emacs.d/bin
 
 set distro (cat /etc/issue | awk '{print $1}' | sed -r 's/\s+//g' | sed '2d')
 
-if test "$distro" == "Pop!_OS"
+if test "$distro" = "Pop!_OS"
 	alias bat "batcat"
 end
 

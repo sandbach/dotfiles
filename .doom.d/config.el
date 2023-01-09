@@ -36,8 +36,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'doom-gruvbox)
-(setq doom-theme 'doom-monokai-pro)
+(setq doom-theme 'doom-gruvbox)
+;; (setq doom-theme 'doom-monokai-pro)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -117,6 +117,10 @@
 
 (global-smart-tab-mode)
 
+(setq-default indicate-empty-lines nil)
+
+(setq-default scroll-margin 7)
+
 (setq visual-line-movement nil)
 
 (defun enable-visual-line-movement ()
@@ -169,8 +173,10 @@
 ;; Org(-roam)
 (org-roam-db-autosync-mode)
 
-(setq org-roam-directory (file-truename "~/Dropbox/org-roam"))
-(org-roam-db-sync)
+(let ((dropbox-org "~/Dropbox/org-roam"))
+  (if (file-directory-p dropbox-org)
+      (progn (setq org-roam-directory (file-truename dropbox-org))
+             (org-roam-db-sync))))
 
 (add-hook 'org-mode-hook 'enable-visual-line-movement)
 

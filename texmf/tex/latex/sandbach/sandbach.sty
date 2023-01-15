@@ -43,7 +43,7 @@
 }
 
 \DeclareOption{de}{
-	\babelprovide[import]{british}
+	\babelprovide[import]{english}
 	\babelprovide[import, main]{ngerman}
 	\renewcommand{\reftitle}{Literatur}
 	\renewcommand{\ingl}[3][]{% use German quotes for in-line gloss
@@ -55,9 +55,11 @@
 
 \DeclareOption{en}{
 	\babelprovide[import]{ngerman}
-	\babelprovide[import, main]{british}
+	% \babelprovide[import]{british}
+	\babelprovide[import, main]{english}
+	% \babelprovide[import, main]{british}
 	\renewcommand{\reftitle}{References}
-	\renewcommand*\glosslinetrans[1]{\enquote{#1}}% use inverted commas
+	% \renewcommand*\glosslinetrans[1]{\enquote{#1}}% use inverted commas
 % 	in gloss line translation for examples
 }
 

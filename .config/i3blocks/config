@@ -4,7 +4,8 @@
 # color=#A4C2F4
 
 [time]
-command=date "+%d %b %l:%M %p"
+# command=date "+%d %b %l:%M %p"
+command=date "+%d %b  %R"
 interval=3
 align=left
 
@@ -18,9 +19,11 @@ signal=10
 # interval=20
 
 [battery1]
-command=acpi -b | grep -v "rate information unavailable" | sed -n '1p' | sed 's/.*\([[:digit:]]\+[[:digit:]]\+%\).*/\1/'
+# command=acpi -b | grep -v "rate information unavailable" | sed -n '1p' | sed 's/.*\([[:digit:]]\+[[:digit:]]\+%\).*/\1/'
+command=echo "$(cat /sys/class/power_supply/BAT0/capacity)%"
 interval=20
 
 [battery2]
-command=acpi -b | grep -v "rate information unavailable" | sed -n '2p' | sed 's/.*\([[:digit:]]\+[[:digit:]]\+%\).*/\1/'
+# command=acpi -b | grep -v "rate information unavailable" | sed -n '2p' | sed 's/.*\([[:digit:]]\+[[:digit:]]\+%\).*/\1/'
+command=echo "$(cat /sys/class/power_supply/BAT1/capacity)%"
 interval=20

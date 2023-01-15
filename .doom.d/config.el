@@ -105,6 +105,12 @@
  :desc "run-latexmk"
  "l" #'run-latexmk)
 
+(map!
+ :leader
+ :prefix "r"
+ :desc "toggle-visual-line-movement"
+ "v" #'toggle-visual-line-movement)
+
 ;; Lisp
 (setq inferior-lisp-program "sbcl")
 
@@ -166,7 +172,8 @@
     (compile command-string)))
 
 (defun latex-settings ()
-  (enable-visual-line-movement))
+  (progn (setq visual-line-movement t)
+         (enable-visual-line-movement)))
 
 (add-hook 'latex-mode-hook 'latex-settings)
 

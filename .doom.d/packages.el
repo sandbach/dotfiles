@@ -57,4 +57,5 @@
 (package! zenburn-theme)
 (package! org-roam)
 (package! ob-async)
+(package! ligature)
 ;; (package! fish-mode)

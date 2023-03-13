@@ -22,10 +22,13 @@
 ;; accept. For example:
 ;;
 ;; (setq doom-font (font-spec :family "Fira Code" :size 18)
-(setq doom-font (font-spec :family "Cascadia Code" :size 18)
+;; (setq doom-font (font-spec :family "Cascadia Code" :size 18)
+;; (setq doom-font (font-spec :family "Fixedsys Excelsior" :size 20)
+;; (setq doom-font (font-spec :family "Go Mono" :size 18)
+(setq doom-font (font-spec :family "Recursive Mono Linear Static" :size 18)
 ;; (setq doom-font (font-spec :family "Iosevka Term" :size 20 :style "Medium Extended")
       doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "monospace"))
+      doom-unicode-font (font-spec :family "DejaVu Sans Mono"))
 ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -83,6 +86,7 @@
 ;; Enable escape with "kj":
 (key-chord-mode 1)
 (key-seq-define-global "kj" 'evil-escape)
+;; (setq-default evil-escape-key-sequence "kj")
 
 ;; My preferred mappings
 (map! :n "C-l" 'evil-window-right
@@ -116,7 +120,8 @@
 
 (defun lisp-settings ()
   (rainbow-delimiters-mode)
-  (display-fill-column-indicator-mode))
+  (display-fill-column-indicator-mode)
+  (yas-minor-mode -1))
 
 (add-hook 'lisp-mode-hook 'lisp-settings)
 (add-hook 'slime-mode-hook 'lisp-settings)
@@ -198,14 +203,43 @@
 ;; C
 (defun c-settings ()
   (display-fill-column-indicator-mode)
-  (format-all-mode))
+  (format-all-mode)
+  (setq c-default-style "my-style"))
 
 (add-hook 'c-mode-hook 'c-settings)
 
-;; (setq-default tab-width 4)
+(setq-default tab-width 4)
 
-;; (c-add-style "my-style"
-;;              `("linux"
-;;                (c-basic-offset . ,tab-width)))
+(c-add-style "my-style"
+             `("linux"
+               (c-basic-offset . ,tab-width)))
 
-;; (setq c-default-style "my-style")
+
+;; (setq c-default-style "linux")
+
+(use-package ligature
+  :load-path "path-to-ligature-repo"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  ;; (global-ligature-mode t)
+  )

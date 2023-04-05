@@ -28,6 +28,7 @@ set -U fish_greeting ""
 fish_add_path /usr/local/texlive/2022/bin/x86_64-linux
 
 fish_add_path ~/.emacs.d/bin
+fish_add_path ~/.config/emacs/bin
 
 set distro (cat /etc/issue | awk '{print $1}' | sed -r 's/\s+//g' | sed '2d')
 
@@ -62,3 +63,5 @@ function emacs
         command emacsclient -c -a "emacs" $argv &
     end
 end
+
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin $PATH /home/ajs/.ghcup/bin # ghcup-env

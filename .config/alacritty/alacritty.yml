@@ -3,6 +3,7 @@
 font:
     normal:
         family: Cascadia Code # (current favourite)
+#         family: Recursive Mono Linear Static
 #         family: Iosevka Term
 #         family: Fira Mono
 #         family: FuraCode Nerd Font

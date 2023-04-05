@@ -89,13 +89,13 @@
 ;; (setq-default evil-escape-key-sequence "kj")
 
 ;; My preferred mappings
-(map! :n "C-l" 'evil-window-right
-      :n "C-h" 'evil-window-left
-      :n "C-j" 'evil-window-down
-      :n "C-k" 'evil-window-up
+(map! :ni "C-l" 'evil-window-right
+      :ni "C-h" 'evil-window-left
+      :ni "C-j" 'evil-window-down
+      :ni "C-k" 'evil-window-up
       :n "C-s" 'evil-write
       :n "C-q" 'evil-quit
-      :n "C-#" 'comment-line)
+      :ni "C-#" 'comment-line)
 
 (map!
  :leader
@@ -243,3 +243,20 @@
   ;; per mode with `ligature-mode'.
   ;; (global-ligature-mode t)
   )
+
+;; Haskell
+(add-hook 'haskell-mode-hook 'subword-mode)
+(add-hook 'haskell-interactive-mode 'subword-mode)
+
+(add-hook 'haskell-error-mode-hook 'turn-off-evil-mode)
+
+(defun hindent ()
+  "Run `hindent' on the current Haskell file."
+  (interactive)
+  (when (eq major-mode 'haskell-mode)
+    (let* ((file (buffer-file-name))
+           (command-string
+            (format "hindent \"%s\"" file)))
+      (shell-command command-string))))
+
+(add-hook 'after-save-hook 'hindent)

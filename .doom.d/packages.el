@@ -59,3 +59,6 @@
 (package! ob-async)
 (package! ligature)
 ;; (package! fish-mode)
+
+;; This was causing trouble:
+(package! pyvenv :disable t)

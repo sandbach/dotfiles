@@ -22,18 +22,32 @@
 ;; accept. For example:
 ;;
 ;; (setq doom-font (font-spec :family "Fira Code" :size 18)
-;; (setq doom-font (font-spec :family "Cascadia Code" :size 18)
-;; (setq doom-font (font-spec :family "Fixedsys Excelsior" :size 20)
-;; (setq doom-font (font-spec :family "Go Mono" :size 18)
-(setq doom-font (font-spec :family "Recursive Mono Linear Static" :size 18)
-;; (setq doom-font (font-spec :family "Iosevka Term" :size 20 :style "Medium Extended")
-      doom-variable-pitch-font (font-spec :family "Fira Sans")
-      doom-unicode-font (font-spec :family "DejaVu Sans Mono"))
+      ;; doom-variable-pitch-font (font-spec :family "Fira Sans")
+      ;; doom-unicode-font (font-spec :family "DejaVu Sans Mono"))
 ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+(setq doom-font-fallback '((font-spec :family "Recursive Mono Linear Static" :size 18)
+                           (font-spec :family "JetBrains Mono" :size 18)
+                           (font-spec :family "monospace")))
+
+(setq doom-variable-pitch-font-fallback '((font-spec :family "Fira Sans")
+                                          (font-spec :family "sans")))
+
+(setq doom-unicode-font-fallback '((font-spec :family "DejaVu Sans Mono")
+                                   (font-spec :family "monospace")))
+
+(defun first-installed (font-specs)
+  (cl-loop for spec in font-specs do
+           (if (doom-font-exists-p (eval spec))
+               (cl-return (eval spec)))))
+
+(setq doom-font (first-installed doom-font-fallback)
+      doom-variable-pitch-font (first-installed doom-variable-pitch-font-fallback)
+      doom-unicode-font (first-installed doom-unicode-font-fallback))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -245,6 +259,12 @@
   )
 
 ;; Haskell
+(map!
+ :leader
+ :prefix "m"
+ :desc "haskell-stack-build"
+ "s" #'haskell-stack-build)
+
 (add-hook 'haskell-mode-hook 'subword-mode)
 (add-hook 'haskell-interactive-mode 'subword-mode)
 
@@ -260,3 +280,10 @@
       (shell-command command-string))))
 
 (add-hook 'after-save-hook 'hindent)
+
+(defun haskell-stack-build ()
+  "Run `stack build' in current directory."
+  (interactive)
+  (when (or (eq major-mode 'haskell-mode)
+            (eq major-mode 'haskell-cabal-mode))
+    (compile "stack build")))

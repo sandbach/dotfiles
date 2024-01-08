@@ -30,15 +30,21 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font-fallback '((font-spec :family "Recursive Mono Linear Static" :size 18)
-                           (font-spec :family "JetBrains Mono" :size 18)
-                           (font-spec :family "monospace")))
+(setq doom-font-fallback
+      '((font-spec :family "Recursive Mono Linear Static" :size 18)
+        (font-spec :family "JetBrains Mono" :size 18)
+        (font-spec :family "monospace")
+        (font-spec :family "Fixedsys Excelsior" :size 22)))
 
-(setq doom-variable-pitch-font-fallback '((font-spec :family "Fira Sans")
-                                          (font-spec :family "sans")))
+(setq doom-variable-pitch-font-fallback
+      '((font-spec :family "Fira Sans")
+        (font-spec :family "Noto Sans")
+        (font-spec :family "Atkinson Hyperlegible" :size 22)
+        (font-spec :family "sans")))
 
-(setq doom-unicode-font-fallback '((font-spec :family "DejaVu Sans Mono")
-                                   (font-spec :family "monospace")))
+(setq doom-unicode-font-fallback
+      '((font-spec :family "DejaVu Sans Mono")
+        (font-spec :family "monospace")))
 
 (defun first-installed (font-specs)
   (cl-loop for spec in font-specs do
@@ -128,6 +134,15 @@
  :prefix "r"
  :desc "toggle-visual-line-movement"
  "v" #'toggle-visual-line-movement)
+
+(map!
+ :leader
+ :prefix "r"
+ :desc "just-execute"
+ "j" #'just-execute)
+
+;; Text mode
+(add-hook 'text-mode-hook 'mixed-pitch-mode)
 
 ;; Lisp
 (setq inferior-lisp-program "sbcl")
@@ -287,3 +302,8 @@
   (when (or (eq major-mode 'haskell-mode)
             (eq major-mode 'haskell-cabal-mode))
     (compile "stack build")))
+
+;; just
+(defun just-execute ()
+  (interactive)
+  (compile "just"))

@@ -38,8 +38,8 @@
 % _native word_ /transcription/ `meaning'
 \newcommand{\ingl}[3][]{%
 	\ifthenelse{\equal{#1}{}}%
-	{\emph{#2} \enquote{#3}}%
-	{\emph{#2} /{\fontspec[Scale=MatchLowercase]{Linux Libertine O}#1}/ \enquote{#3}}%
+	{\emph{#2} \enquote*{#3}}%
+	{\emph{#2} /{\fontspec[Scale=MatchLowercase]{Linux Libertine O}#1}/ \enquote*{#3}}%
 }
 
 \DeclareOption{de}{
@@ -162,7 +162,7 @@
 
 \DefineBibliographyExtras{british}{\def\finalandcomma{\addcomma}} % Enable Oxford Comma
 \babelprovide[import]{arabic}
-\babelprovide[import]{hebrew}
+% \babelprovide[import]{hebrew}
 \babelprovide[import]{hebrew}
 \babelprovide[import]{chinese}
 % \babelfont[arabic]{rm}{Scheherazade New}

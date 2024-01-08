@@ -58,6 +58,10 @@
 (package! org-roam)
 (package! ob-async)
 (package! ligature)
+(package! f)
+(package! just-mode)
+(package! mixed-pitch)
+;; (package! typst-mode)
 ;; (package! fish-mode)
 
 ;; This was causing trouble:

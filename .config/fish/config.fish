@@ -25,7 +25,8 @@ end
 
 set -U fish_greeting ""
 
-fish_add_path /usr/local/texlive/2022/bin/x86_64-linux
+# fish_add_path /usr/local/texlive/2022/bin/x86_64-linux
+fish_add_path /usr/local/texlive/2023/bin/x86_64-linux
 
 fish_add_path ~/.emacs.d/bin
 fish_add_path ~/.config/emacs/bin

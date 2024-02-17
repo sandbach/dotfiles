@@ -41,6 +41,19 @@ alias zz "z -"
 
 alias lisp "rlwrap sbcl"
 
+function take -d "Create a directory and set CWD"
+    command mkdir $argv
+    if test $status = 0
+        switch $argv[(count $argv)]
+            case '-*'
+
+            case '*'
+                cd $argv[(count $argv)]
+                return
+        end
+    end
+end
+
 # funcsave bat zz
 
 # see: https://dev.to/nimai/yet-another-guide-on-backing-up-dotfiles-3be6

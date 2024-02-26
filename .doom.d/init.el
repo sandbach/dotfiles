@@ -195,4 +195,4 @@
        (default +bindings +smartparens))
        ;; (default +bindings))
 
-(server-start)
+;; (server-start)

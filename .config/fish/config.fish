@@ -62,22 +62,16 @@ function cfg
 end
 
 # for emacsclient:
-set -gx ALTERNATE_EDITOR ""
-set -gx EDITOR "emacsclient --create-frame --alternate-editor=\"\""
-set -gx VISUAL "emacsclient --create-frame --alternate-editor=\"\""
-
-# function emacs # add -c to open in new frame
-#     command emacsclient -a emacs $argv &
-# end
-
 function emacs
     if pidof emacsclient
-        # command emacsclient --alternate-editor="emacs" $argv &
         command emacsclient --alternate-editor="" $argv &
     else
-        # command emacsclient --create-frame --alternate-editor="emacs" $argv &
         command emacsclient --create-frame --alternate-editor="" $argv &
     end
 end
+
+set -gx ALTERNATE_EDITOR ""
+set -gx EDITOR emacs
+set -gx VISUAL emacs
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin $PATH /home/ajs/.ghcup/bin # ghcup-env

@@ -34,7 +34,7 @@ fish_add_path ~/.config/emacs/bin
 set distro (cat /etc/issue | awk '{print $1}' | sed -r 's/\s+//g' | sed '2d')
 
 if test "$distro" = "Pop!_OS"
-	alias bat "batcat"
+    alias bat "batcat"
 end
 
 alias zz "z -"
@@ -58,7 +58,7 @@ end
 
 # see: https://dev.to/nimai/yet-another-guide-on-backing-up-dotfiles-3be6
 function cfg 
-	command git --git-dir=$HOME/.config/cfg/.git --work-tree=$HOME $argv
+    command git --git-dir=$HOME/.config/cfg/.git --work-tree=$HOME $argv
 end
 
 # for emacsclient:
@@ -72,9 +72,11 @@ set -gx VISUAL "emacsclient -c -a emacs"
 
 function emacs
     if pidof emacsclient
-        command emacsclient -a "emacs" $argv &
+        # command emacsclient --alternate-editor="emacs" $argv &
+        command emacsclient --alternate-editor="" $argv &
     else
-        command emacsclient -c -a "emacs" $argv &
+        # command emacsclient --create-frame --alternate-editor="emacs" $argv &
+        command emacsclient --create-frame --alternate-editor="" $argv &
     end
 end
 

@@ -63,8 +63,8 @@ end
 
 # for emacsclient:
 set -gx ALTERNATE_EDITOR ""
-set -gx EDITOR "emacsclient -c"
-set -gx VISUAL "emacsclient -c -a emacs"
+set -gx EDITOR "emacsclient --create-frame --alternate-editor=\"\""
+set -gx VISUAL "emacsclient --create-frame --alternate-editor=\"\""
 
 # function emacs # add -c to open in new frame
 #     command emacsclient -a emacs $argv &

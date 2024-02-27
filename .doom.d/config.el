@@ -22,9 +22,9 @@
 ;; accept. For example:
 ;;
 ;; (setq doom-font (font-spec :family "Fira Code" :size 18)
-      ;; doom-variable-pitch-font (font-spec :family "Fira Sans")
-      ;; doom-unicode-font (font-spec :family "DejaVu Sans Mono"))
-;
+;; doom-variable-pitch-font (font-spec :family "Fira Sans")
+;; doom-unicode-font (font-spec :family "DejaVu Sans Mono"))
+                                        ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
@@ -127,12 +127,6 @@
 (map!
  :leader
  :prefix "r"
- :desc "run-latexmk"
- "l" #'run-latexmk)
-
-(map!
- :leader
- :prefix "r"
  :desc "toggle-visual-line-movement"
  "v" #'toggle-visual-line-movement)
 
@@ -206,11 +200,19 @@
           (format "latexmk -xelatex -synctex=1 -cd -recorder- \"%s\"" file)))
     (compile command-string)))
 
-(defun latex-settings ()
-  (progn (setq visual-line-movement t)
-         (enable-visual-line-movement)))
+;; (defun latex-settings ()
+;;   (progn (setq visual-line-movement t)
+;;          (enable-visual-line-movement)))
 
-(add-hook 'latex-mode-hook 'latex-settings)
+(add-hook 'latex-mode-hook 'enable-visual-line-movement)
+
+(map!
+ :after latex
+ :map latex-mode-map
+ :leader
+ :prefix "r"
+ :desc "run-latexmk"
+ "l" #'run-latexmk)
 
 ;; Org(-roam)
 (org-roam-db-autosync-mode)
@@ -276,8 +278,10 @@
 
 ;; Haskell
 (map!
+ :after haskell
+ :map haskell-mode-hook
  :leader
- :prefix "m"
+ :localleader
  :desc "haskell-stack-build"
  "s" #'haskell-stack-build)
 

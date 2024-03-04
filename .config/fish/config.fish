@@ -62,13 +62,13 @@ function cfg
 end
 
 # for emacsclient:
-function emacs
-    if pidof emacsclient
-        command emacsclient --alternate-editor="" $argv &
-    else
-        command emacsclient --create-frame --alternate-editor="" $argv &
-    end
-end
+# function emacs
+#     if pidof emacsclient
+#         command emacsclient --alternate-editor="" $argv &
+#     else
+#         command emacsclient --create-frame --alternate-editor="" $argv &
+#     end
+# end
 
 set -gx ALTERNATE_EDITOR ""
 set -gx EDITOR ec

@@ -32,12 +32,14 @@
 
 (setq doom-font-fallback
       '((font-spec :family "Recursive Mono Linear Static" :size 19)
+        (font-spec :family "Iosevka Slab" :size 20)
         (font-spec :family "JetBrains Mono" :size 18)
         (font-spec :family "monospace")
         (font-spec :family "Fixedsys Excelsior" :size 22)))
 
 (setq doom-variable-pitch-font-fallback
       '((font-spec :family "Recursive Sans Linear Static")
+        (font-spec :family "Iosevka Slab" :style "Extended")
         (font-spec :family "Fira Sans")
         (font-spec :family "Noto Sans")
         (font-spec :family "Atkinson Hyperlegible" :size 22)

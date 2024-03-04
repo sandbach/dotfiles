@@ -9,7 +9,12 @@ if pidof emacsclient
         command emacsclient --alternate-editor="" $argv &
     end
 else
-    command emacsclient --create-frame --alternate-editor="" $argv &
+    if [ $base = "COMMIT_EDITMSG" ]
+        command emacsclient --create-frame --alternate-editor="" $argv
+        echo "It's a git commit"
+    else
+        command emacsclient --create-frame --alternate-editor="" $argv
+    end
 end
 # /usr/bin/bash
 

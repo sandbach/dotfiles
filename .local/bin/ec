@@ -4,15 +4,13 @@ set base (basename $argv)
 if pidof emacsclient
     if [ $base = "COMMIT_EDITMSG" ]
         command emacsclient --alternate-editor="" $argv
-        echo "It's a git commit"
     else
         command emacsclient --alternate-editor="" $argv &
     end
 else
     if [ $base = "COMMIT_EDITMSG" ]
         command emacsclient --create-frame --alternate-editor="" $argv
-        echo "It's a git commit"
     else
-        command emacsclient --create-frame --alternate-editor="" $argv
+        command emacsclient --create-frame --alternate-editor="" $argv &
     end
 end

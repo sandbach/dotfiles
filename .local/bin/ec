@@ -16,10 +16,3 @@ else
         command emacsclient --create-frame --alternate-editor="" $argv
     end
 end
-# /usr/bin/bash
-
-# if pidof emacsclient; then
-#     exec emacsclient --alternate-editor="" "$@" &
-# else
-#     exec emacsclient --create-frame --alternate-editor="" "$@" &
-# fi

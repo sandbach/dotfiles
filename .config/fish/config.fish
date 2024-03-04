@@ -71,7 +71,7 @@ function emacs
 end
 
 set -gx ALTERNATE_EDITOR ""
-set -gx EDITOR emacs
-set -gx VISUAL emacs
+set -gx EDITOR ec
+set -gx VISUAL ec
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin $PATH /home/ajs/.ghcup/bin # ghcup-env

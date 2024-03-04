@@ -138,6 +138,18 @@
  :desc "just-execute"
  "j" #'just-execute)
 
+(map!
+ :leader
+ :prefix "r"
+ :desc "Fuzzily find file in HOME"
+ "f" (cmd!! #'affe-find "~/"))
+
+(map!
+ :leader
+ :prefix "r"
+ :desc "Fuzzily find file in HOME"
+ "g" #'affe-grep)
+
 ;; Text mode
 (add-hook 'text-mode-hook 'mixed-pitch-mode)
 

@@ -1,7 +1,20 @@
-#! /usr/bin/bash
+#! /usr/bin/fish
+set base (basename $argv)
 
-if pidof emacsclient; then
-    exec emacsclient --alternate-editor="" "$@" &
+if pidof emacsclient
+    if [ $base = "COMMIT_EDITMSG" ]
+        command emacsclient --alternate-editor="" $argv
+        echo "It's a git commit"
+    else
+        command emacsclient --alternate-editor="" $argv &
+    end
 else
-    exec emacsclient --create-frame --alternate-editor="" "$@" &
-fi
+    command emacsclient --create-frame --alternate-editor="" $argv &
+end
+# /usr/bin/bash
+
+# if pidof emacsclient; then
+#     exec emacsclient --alternate-editor="" "$@" &
+# else
+#     exec emacsclient --create-frame --alternate-editor="" "$@" &
+# fi

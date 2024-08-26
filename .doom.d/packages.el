@@ -62,6 +62,7 @@
 (package! just-mode)
 (package! mixed-pitch)
 (package! affe)
+(package! paredit)
 ;; (package! typst-mode)
 ;; (package! fish-mode)
 

@@ -159,7 +159,8 @@
 (defun lisp-settings ()
   (rainbow-delimiters-mode)
   (display-fill-column-indicator-mode)
-  (yas-minor-mode -1))
+  (yas-minor-mode -1)
+  (paredit-mode))
 
 (add-hook 'lisp-mode-hook 'lisp-settings)
 (add-hook 'slime-mode-hook 'lisp-settings)
@@ -326,3 +327,7 @@
 (defun just-execute ()
   (interactive)
   (compile "just"))
+
+
+;; markdown
+(add-hook 'markdown-mode-hook 'enable-visual-line-movement)

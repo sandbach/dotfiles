@@ -243,7 +243,8 @@
  'org-babel-load-languages
  '((lisp . t)
    (emacs-lisp t)
-   (python . t)))
+   (python . t)
+   (haskell . t)))
 
 (setq org-babel-lisp-eval-fn #'slime-eval)
 

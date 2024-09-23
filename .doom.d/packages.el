@@ -65,6 +65,7 @@
 (package! paredit)
 ;; (package! typst-mode)
 ;; (package! fish-mode)
+(package! howm)
 
 ;; This was causing trouble:
 (package! pyvenv :disable t)

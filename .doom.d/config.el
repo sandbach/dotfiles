@@ -150,21 +150,6 @@
  :desc "Fuzzily find file in HOME"
  "g" #'affe-grep)
 
-;; Text mode
-(add-hook 'text-mode-hook 'mixed-pitch-mode)
-
-;; Lisp
-(setq inferior-lisp-program "sbcl")
-
-(defun lisp-settings ()
-  (rainbow-delimiters-mode)
-  (display-fill-column-indicator-mode)
-  (yas-minor-mode -1)
-  (paredit-mode))
-
-(add-hook 'lisp-mode-hook 'lisp-settings)
-(add-hook 'slime-mode-hook 'lisp-settings)
-
 (global-smart-tab-mode)
 
 (setq-default indicate-empty-lines nil)
@@ -204,6 +189,25 @@
         (t
          (disable-visual-line-movement)
          (setq visual-line-movement nil))))
+
+;; doom doctor told me to do this:
+(setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+
+;; Text mode
+(add-hook 'text-mode-hook 'mixed-pitch-mode)
+
+;; Lisp
+(setq inferior-lisp-program "sbcl")
+
+(defun lisp-settings ()
+  (rainbow-delimiters-mode)
+  (display-fill-column-indicator-mode)
+  (yas-minor-mode -1)
+  (paredit-mode))
+
+(add-hook 'lisp-mode-hook 'lisp-settings)
+(add-hook 'slime-mode-hook 'lisp-settings)
 
 ;; LaTeX
 (setq-default TeX-engine 'xetex)
@@ -332,3 +336,30 @@
 
 ;; markdown
 (add-hook 'markdown-mode-hook 'enable-visual-line-movement)
+
+;; howm
+;; These configuration ideas were taken from:
+;; https://leahneukirchen.org/blog/archive/2022/03/note-taking-in-emacs-with-howm.html
+;; https://news.ycombinator.com/item?id=41443889
+
+;; Directory configuration
+(setq howm-home-directory "~/Dropbox/howm/")
+(setq howm-directory howm-home-directory)
+(setq home-keyword-file (expand-file-name ".home-keys" howm-home-directory))
+(setq home-history-file (expand-file-name ".home-history" howm-home-directory))
+;; Org-compatible filenames and syntax
+(setq home-file-name-format "%Y-%m-%d-%H%M%S.org")
+(setq howm-view-title-header "*")
+(setq howm-dtime-format (format "<%s>" (cdr org-timestamp-formats)))
+;; Use ripgrep for fast searching.
+(setq howm-view-use-grep t)
+(setq howm-view-grep-command "rg")
+(setq howm-view-grep-option "-nH --no-heading --color never")
+(setq howm-view-grep-extended-option nil)
+(setq howm-view-grep-fixed-option "-F")
+(setq howm-view-grep-expr-option nil)
+(setq howm-view-grep-file-stdin-option nil)
+;; Make the "comefrom links" case-insensitive.
+(setq howm-keyword-case-fold-search t)
+;; Get rid of the old-fashioned separators.
+(setq howm-view-summary-sep "\t")

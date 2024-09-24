@@ -147,7 +147,7 @@
 (map!
  :leader
  :prefix "r"
- :desc "Fuzzily find file in HOME"
+ :desc "Fuzzily find contents of files in CWD"
  "g" #'affe-grep)
 
 (global-smart-tab-mode)
@@ -337,29 +337,3 @@
 ;; markdown
 (add-hook 'markdown-mode-hook 'enable-visual-line-movement)
 
-;; howm
-;; These configuration ideas were taken from:
-;; https://leahneukirchen.org/blog/archive/2022/03/note-taking-in-emacs-with-howm.html
-;; https://news.ycombinator.com/item?id=41443889
-
-;; Directory configuration
-(setq howm-home-directory "~/Dropbox/howm/")
-(setq howm-directory howm-home-directory)
-(setq home-keyword-file (expand-file-name ".home-keys" howm-home-directory))
-(setq home-history-file (expand-file-name ".home-history" howm-home-directory))
-;; Org-compatible filenames and syntax
-(setq home-file-name-format "%Y-%m-%d-%H%M%S.org")
-(setq howm-view-title-header "*")
-(setq howm-dtime-format (format "<%s>" (cdr org-timestamp-formats)))
-;; Use ripgrep for fast searching.
-(setq howm-view-use-grep t)
-(setq howm-view-grep-command "rg")
-(setq howm-view-grep-option "-nH --no-heading --color never")
-(setq howm-view-grep-extended-option nil)
-(setq howm-view-grep-fixed-option "-F")
-(setq howm-view-grep-expr-option nil)
-(setq howm-view-grep-file-stdin-option nil)
-;; Make the "comefrom links" case-insensitive.
-(setq howm-keyword-case-fold-search t)
-;; Get rid of the old-fashioned separators.
-(setq howm-view-summary-sep "\t")

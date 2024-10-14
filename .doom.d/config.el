@@ -58,6 +58,13 @@
       doom-variable-pitch-font (first-installed doom-variable-pitch-font-fallback)
       doom-unicode-font (first-installed doom-unicode-font-fallback))
 
+;; https://rongcuid.github.io/posts/2021-04-02-Doom-Emacs-CJK.html
+(defun init-cjk-fonts ()
+  (dolist (charset '(kana han cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset (font-spec :family "Noto Sans CJK SC"))))
+(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -223,7 +230,11 @@
 ;;   (progn (setq visual-line-movement t)
 ;;          (enable-visual-line-movement)))
 
-(add-hook 'latex-mode-hook 'enable-visual-line-movement)
+(defun LaTeX-settings ()
+  (progn (enable-visual-line-movement)
+         (flyspell-mode)))
+
+(add-hook 'LaTeX-mode-hook 'LaTeX-settings)
 
 (map!
  :after latex
@@ -251,6 +262,10 @@
    (haskell . t)))
 
 (setq org-babel-lisp-eval-fn #'slime-eval)
+
+(setq org-cite-global-bibliography
+      (list (expand-file-name "~/Dropbox/references.bib")))
+(setq citar-bibliography org-cite-global-bibliography)
 
 ;; C
 (defun c-settings ()
@@ -337,3 +352,7 @@
 ;; markdown
 (add-hook 'markdown-mode-hook 'enable-visual-line-movement)
 
+
+;; denote
+(setq denote-directory (expand-file-name "~/Dropbox/denote/"))
+(denote-rename-buffer-mode 1)

@@ -1,0 +1,31 @@
+[bell]
+animation = "EaseOutQuad"
+duration = 200
+
+[colors.normal]
+black = "#1d1f21"
+blue = "#729fcf"
+cyan = "#06989a"
+green = "#4e9a06"
+magenta = "#75507b"
+red = "#cc0000"
+white = "#d3d7cf"
+yellow = "#c4a000"
+
+[colors.primary]
+background = "#1C1C1C"
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "Cascadia Code"
+style = "Medium"
+
+[window.dimensions]
+columns = 80
+lines = 28
+
+[window.padding]
+x = 2
+y = 2

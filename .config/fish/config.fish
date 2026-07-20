@@ -75,3 +75,30 @@ set -gx EDITOR ec
 set -gx VISUAL ec
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin $PATH /home/ajs/.ghcup/bin # ghcup-env
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /home/ajs/miniconda3/bin/conda
+    eval /home/ajs/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+else
+    if test -f "/home/ajs/miniconda3/etc/fish/conf.d/conda.fish"
+        . "/home/ajs/miniconda3/etc/fish/conf.d/conda.fish"
+    else
+        set -x PATH "/home/ajs/miniconda3/bin" $PATH
+    end
+end
+# <<< conda initialize <<<
+
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/home/ajs/.opam/opam-init/init.fish' && source '/home/ajs/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
+# END opam configuration

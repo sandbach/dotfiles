@@ -50,9 +50,9 @@
                                         ;(unpin! t)
 
 (package! key-chord)
+(package! use-package-chords)
 (package! key-seq)
 (package! slime)
-;; (package! sly)
 (package! smart-tab)
 (package! zenburn-theme)
 (package! org-roam)
@@ -63,9 +63,12 @@
 (package! mixed-pitch)
 (package! affe)
 (package! paredit)
-;; (package! typst-mode)
-;; (package! fish-mode)
 (package! denote)
+(package! format-all)
+(package! uv-mode)
+
+;; citar has a dependency on this
+(package! citar-org-roam)
 
 ;; This was causing trouble:
 (package! pyvenv :disable t)

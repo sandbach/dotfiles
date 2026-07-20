@@ -2,11 +2,28 @@
 \ProvidesPackage{coverletter}[2024/09/24]
 
 \RequirePackage[a4paper, margin=1in]{geometry}
-\usepackage{fontspec}
-\usepackage[british]{babel}
+\RequirePackage{fontspec}
+\RequirePackage[british]{babel}
+\RequirePackage{datetime2}
+\DTMnewdatestyle{correctbritish}{%
+\renewcommand{\DTMdisplaydate}[4]{\number##3\ \DTMenglishmonthname{\number##2}\ \number##1}%
+\renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{correctbritish}
 \usepackage{csquotes}
-\usepackage[hidelinks]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  urlcolor = MidnightBlue
+}
 
 \setmainfont{Linux Libertine O}
 \signature{Asher Sandbach}
-\address{Asher Sandbach \\ Flat 5 Hawridge Mews \\ 6--8 Stockmore Street \\ Oxford \\ OX4 1FQ \\ \href{mailto:asher.sandbach@gmail.com}{asher.sandbach@gmail.com}}
+\address{
+Asher Sandbach \\
+Flat 5 Hawridge Mews \\
+6--8 Stockmore Street \\
+Oxford OX4 1FQ \\
+\href{mailto:asher.sandbach@gmail.com}{asher.sandbach@gmail.com}
+}

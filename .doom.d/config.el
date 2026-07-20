@@ -30,8 +30,14 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
+(defun first-installed (font-specs)
+  (cl-loop for spec in font-specs do
+           (if (doom-font-exists-p (eval spec))
+               (cl-return (eval spec)))))
+
 (setq doom-font-fallback
       '((font-spec :family "Recursive Mono Linear Static" :size 19)
+        (font-spec :family "JuliaMono" :size 19)
         (font-spec :family "Iosevka Slab" :size 20)
         (font-spec :family "JetBrains Mono" :size 18)
         (font-spec :family "monospace")
@@ -49,14 +55,22 @@
       '((font-spec :family "DejaVu Sans Mono")
         (font-spec :family "monospace")))
 
-(defun first-installed (font-specs)
-  (cl-loop for spec in font-specs do
-           (if (doom-font-exists-p (eval spec))
-               (cl-return (eval spec)))))
+(setq arabic-font-fallback
+      '((font-spec :family "Readex Pro")
+        (font-spec :family "Noto Sans Arabic")
+        (first-installed doom-font-fallback)))
+
+(setq greek-font-fallback
+      '((font-spec :family "JuliaMono")
+        (first-installed doom-font-fallback)))
 
 (setq doom-font (first-installed doom-font-fallback)
       doom-variable-pitch-font (first-installed doom-variable-pitch-font-fallback)
       doom-unicode-font (first-installed doom-unicode-font-fallback))
+
+;; Other scripts
+(set-fontset-font t 'arabic (first-installed arabic-font-fallback))
+(set-fontset-font t 'greek (first-installed greek-font-fallback))
 
 ;; https://rongcuid.github.io/posts/2021-04-02-Doom-Emacs-CJK.html
 (defun init-cjk-fonts ()
@@ -116,6 +130,8 @@
 ;; Enable escape with "kj":
 (key-chord-mode 1)
 (key-seq-define-global "kj" 'evil-escape)
+(setq key-chord-two-keys-delay 0.25)
+(key-chord-define evil-insert-state-map "kj" 'evil-escape)
 ;; (setq-default evil-escape-key-sequence "kj")
 
 ;; My preferred mappings
@@ -177,17 +193,6 @@
         :n "k" 'evil-previous-line)
   (setq visual-line-movement nil))
 
-;; (defun toggle-visual-line-movement ()
-;;   (interactive)
-;;   (cond ((not visual-line-movement)
-;;          (map! :n "j" 'evil-next-visual-line
-;;                :n "k" 'evil-previous-visual-line)
-;;          (setq visual-line-movement t))
-;;         (t
-;;          (map! :n "j" 'evil-next-line
-;;                :n "k" 'evil-previous-line)
-;;          (setq visual-line-movement nil))))
-
 (defun toggle-visual-line-movement ()
   (interactive)
   (cond ((not visual-line-movement)
@@ -202,7 +207,25 @@
 (setq-default vterm-shell (executable-find "fish"))
 
 ;; Text mode
-(add-hook 'text-mode-hook 'mixed-pitch-mode)
+(defun text-mode-settings ()
+  (mixed-pitch-mode)
+  (enable-visual-line-movement)
+  (flyspell-mode 1)
+  (ispell-change-dictionary "en_GB-ize"))
+
+(add-hook 'text-mode-hook 'text-mode-settings)
+
+(defun search-crossref (text)
+  (browse-url (format "https://search.crossref.org/search/works?q=%s&from_ui=no"
+                      text)))
+
+(defun crossref (text)
+  (interactive "sSearch term: ")
+  (search-crossref text))
+
+(set-lookup-handlers! 'org-mode
+  :documentation #'search-crossref)
+
 
 ;; Lisp
 (setq inferior-lisp-program "sbcl")
@@ -230,11 +253,15 @@
 ;;   (progn (setq visual-line-movement t)
 ;;          (enable-visual-line-movement)))
 
-(defun LaTeX-settings ()
-  (progn (enable-visual-line-movement)
-         (flyspell-mode)))
+;; (defun LaTeX-settings ()
+;;   (progn (enable-visual-line-movement)
+;;          (flyspell-mode)))
 
-(add-hook 'LaTeX-mode-hook 'LaTeX-settings)
+;; (add-hook 'LaTeX-mode-hook 'LaTeX-settings)
+;; (add-hook 'LaTeX-mode-hook (progn (mixed-pitch-mode 1)
+;;                                   (enable-visual-line-movement)
+;;                                   (flyspell-mode 1)
+;;                                   (ispell-change-dictionary "en_GB-ize")))
 
 (map!
  :after latex
@@ -252,8 +279,6 @@
       (progn (setq org-roam-directory (file-truename dropbox-org))
              (org-roam-db-sync))))
 
-(add-hook 'org-mode-hook 'enable-visual-line-movement)
-
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((lisp . t)
@@ -266,6 +291,9 @@
 (setq org-cite-global-bibliography
       (list (expand-file-name "~/Dropbox/references.bib")))
 (setq citar-bibliography org-cite-global-bibliography)
+
+(setq org-html-htmlize-output-type 'css)
+(setq org-html-htmlize-font-prefix "org-")
 
 ;; C
 (defun c-settings ()
@@ -356,3 +384,15 @@
 ;; denote
 (setq denote-directory (expand-file-name "~/Dropbox/denote/"))
 (denote-rename-buffer-mode 1)
+
+;; SQL
+
+(defun sqlformat-region ()
+  (interactive)
+  (shell-command-on-region
+   (region-beginning)
+   (region-end)
+   "sqlformat -r -k upper -"
+   t
+   t))
+
